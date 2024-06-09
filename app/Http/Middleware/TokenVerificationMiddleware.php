@@ -17,18 +17,14 @@ class TokenVerificationMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $token=$request->header('token');
+        $token=$request->cookie('token');
         $result=JWTToken::VerifyToken($token);
         if($result=="Unauthozized"){
-            return response()->json(
-                [
-                    "status"=> 'Unauthozized',
-                    'message' => 'User Unauthozized'
-                ],401
-            );
+            return redirect("/login");
         }
         else{
-            $request->headers->set('email',$result);
+            $request->headers->set('email',$result->email);
+            $request->headers->set('id',$result->id);
             return $next($request);
         }
     }

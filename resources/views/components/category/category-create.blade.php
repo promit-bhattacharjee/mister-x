@@ -31,13 +31,13 @@
             let categoryName = document.getElementById('categoryName').value;
             document.getElementById('modal-close').click();
             showLoader();
-            let res = await axios.post("/create-category",{name:categoryName},HeaderToken())
+            let res = await axios.post("/add-categories",{name:categoryName})
             hideLoader();
 
             if(res.data['status']==="success"){
                 successToast(res.data['message']);
                 document.getElementById("save-form").reset();
-                await getList();
+                // await getList();
             }
             else{
                 errorToast(res.data['message'])
@@ -46,5 +46,8 @@
         }catch (e) {
             unauthorized(e.response.status)
         }
+        await getList();
+        document.getElementById('categoryName').value=''
+        categoryName=''
     }
 </script>

@@ -27,7 +27,7 @@
              let res=await axios.post("/delete-customer",{id:id},HeaderToken())
              hideLoader();
 
-             if(res.data['status']==="success"){
+             if(res.data['status']==="sucessful"){
                  successToast(res.data['message'])
                  await getList();
              }

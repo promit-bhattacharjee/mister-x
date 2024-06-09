@@ -20,18 +20,23 @@
 
 <script>
   async function ResetPass() {
-      let postBody={"password":document.getElementById('password').value}
+      let password=document.getElementById('password').value
+      let cpassword=document.getElementById('cpassword').value
+    if(cpassword===password)
+    {
+        let res=await axios.post("/reset-password",{password:password})
+        if(res.status==200 && res["data"]["status"]=="Athorized")
+        {
+            window.location.href="/login"
+        }
+        else{
+            window.alert("Invalid User");
+        }
+    }
+    else{
+        window.alert("Invalid Password");
+    }
 
-      showLoader();
-      let res=await axios.post("/reset-password",postBody,HeaderToken());
-      hideLoader()
-
-      if(res.status===200 && res.data['status']==='success'){
-          window.location.href="/userProfile";
-      }
-      else{
-          errorToast(res.data['message']);
-      }
 
     }
 </script>

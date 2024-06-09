@@ -43,10 +43,11 @@
             let res = await axios.post("/create-customer",{name:customerName,email:customerEmail,mobile:customerMobile},HeaderToken())
             hideLoader();
 
-            if(res.data['status']==="success"){
+            if(res.data['status']==="sucessful"){
                 successToast(res.data['message']);
                 document.getElementById("save-form").reset();
                 await getList();
+
             }
             else{
                 errorToast(res.data['message'])
@@ -55,6 +56,7 @@
         }catch (e) {
             unauthorized(e.response.status)
         }
+
 
     }
 

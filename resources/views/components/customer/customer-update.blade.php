@@ -39,13 +39,13 @@
         try {
             document.getElementById('updateID').value=id;
             showLoader();
-            let res=await axios.post("/customer-by-id",{id:id},HeaderToken())
+            let res=await axios.post("/customer-by-id",{id:id});
             hideLoader();
-            document.getElementById('customerNameUpdate').value=res.data['rows']['name'];
-            document.getElementById('customerEmailUpdate').value=res.data['rows']['email'];
-            document.getElementById('customerMobileUpdate').value=res.data['rows']['mobile'];
+            document.getElementById('customerNameUpdate').value=res["data"]["data"]["name"];
+            document.getElementById('customerEmailUpdate').value=res['data']['data']['email'];
+            document.getElementById('customerMobileUpdate').value=res['data']['data']['mobile'];
         }catch (e) {
-            unauthorized(e.response.status)
+            // unauthorized(e)
         }
     }
 
@@ -61,12 +61,12 @@
 
             document.getElementById('update-modal-close').click();
             showLoader();
-            let res = await axios.post("/update-customer",{name:customerName,email:customerEmail,mobile:customerMobile,id:updateID},HeaderToken())
+            let res = await axios.post("/update-customer",{name:customerName,email:customerEmail,mobile:customerMobile,id:updateID})
             hideLoader();
 
-            if(res.data['status']==="success"){
+            if(res["data"]['status']=="sucessful"){
                 document.getElementById("update-form").reset();
-                successToast(res.data['message'])
+                successToast(res["data"]['message'])
                 await getList();
             }
             else{
@@ -74,7 +74,7 @@
             }
 
         }catch (e) {
-            unauthorized(e.response.status)
+            // unauthorized(e.response.status)
         }
 
 

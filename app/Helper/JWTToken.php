@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Helper;
 
@@ -9,41 +9,45 @@ use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class JWTToken
 {
-    public static function CreateToken($email):string
+    public static function CreateToken($email, $userID): string
     {
-        $key=env("JWT_KEY");
-        $payload=[
-            "iss"=>"promit",
-            "iat"=>time(),
-            "exp"=>time()+3600,
-            "email"=>$email
-            ];
-       return JWT::encode($payload,$key,'HS256');
+        $key = env("JWT_KEY");
+        $payload = [
+            "iss" => "promit",
+            "iat" => time(),
+            "exp" => time() + 3600,
+            "email" => $email,
+            "id"=>$userID
+        ];
+        return JWT::encode($payload, $key, 'HS256');
 
 
     }
-    public static function VerifyToken($token):string
+    public static function VerifyToken($token): string|object
     {
-        try{
-            $key=env("JWT_KEY");
-            $decode=JWT::decode($token,new Key($key,'HS256'));
-            return $decode->email;
+        try {
+            if ($token === null) {
+                return "Unauthozized";
+            } else {
+                $key = env("JWT_KEY");
+                $decode = JWT::decode($token, new Key($key, 'HS256'));
+                return $decode;
+            }
 
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return "Unauthozized";
         }
     }
-    public static function CreateTokenForSetPassword($email):string
+    public static function CreateTokenForSetPassword($email, $userID): string
     {
-        $key=env("JWT_KEY");
-        $payload=[
-            "iss"=>"promit",
-            "iat"=>time(),
-            "exp"=>time()+60*60,
-            "email"=>$email
+        $key = env("JWT_KEY");
+        $payload = [
+            "iss" => "promit",
+            "iat" => time(),
+            "exp" => time() + 60 * 60,
+            "email" => $email,
+            "id" => $userID
         ];
-       return JWT::encode($payload,$key,"HS256");
+        return JWT::encode($payload, $key, "HS256");
     }
 }

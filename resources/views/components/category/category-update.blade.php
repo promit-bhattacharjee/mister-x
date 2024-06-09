@@ -19,7 +19,7 @@
             </div>
             <div class="modal-footer">
                 <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                <button onclick="Update()" id="update-btn" class="btn bg-gradient-success" >Update</button>
+                <button onclick="update()" id="update-btn" class="btn bg-gradient-success" >Update</button>
             </div>
         </div>
     </div>
@@ -28,48 +28,39 @@
 
 <script>
 
-
-   async function FillUpUpdateForm(id){
-       try {
-           document.getElementById('updateID').value=id;
-           showLoader();
-           let res=await axios.post("/category-by-id",{id:id},HeaderToken())
-           hideLoader();
-           document.getElementById('categoryNameUpdate').value=res.data['rows']['name'];
-       }catch (e) {
-           unauthorized(e.response.status)
-       }
-    }
-
-
-
-
-    async function Update() {
-
-       try {
-
-           let categoryName = document.getElementById('categoryNameUpdate').value;
-           let updateID = document.getElementById('updateID').value;
-
-           document.getElementById('update-modal-close').click();
-           showLoader();
-           let res = await axios.post("/update-category",{name:categoryName,id:updateID},HeaderToken())
-           hideLoader();
-
-           if(res.data['status']==="success"){
-               document.getElementById("update-form").reset();
-               successToast(res.data['message'])
-               await getList();
+async function categoryByID(id){
+    let res=await axios.post("/category-by-id",{id:id})
+    document.getElementById("updateID").value=id
+    if(res.data['status']==="sucessful"){
+               document.getElementById("categoryNameUpdate").value=res["data"]["data"]["name"];
            }
            else{
                errorToast(res.data['message'])
            }
 
+
+
+
+}
+
+   async function update(){
+       try {
+        let id=document.getElementById('updateID').value;
+        let name=document.getElementById('categoryNameUpdate').value;
+           showLoader();
+           let res=await axios.post("/edit-categories",{id:id,name:name})
+           if(res.data['status']==="sucessful"){
+               document.getElementById("update-form").reset();
+               successToast(res.data['message'])
+               document.getElementById("update-modal-close").click()
+               await getList();
+           }
+           else{
+               errorToast(res.data['message'])
+           }
+           hideLoader();
        }catch (e) {
-           unauthorized(e.response.status)
+           window.alert(e)
        }
     }
-
-
-
 </script>

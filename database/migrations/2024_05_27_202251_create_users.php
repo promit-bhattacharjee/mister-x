@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('lastName',50);
             $table->string("email",200)->unique();
             $table->string("password",1000);
-            $table->string("mobile",20);
+            $table->string("mobile",20)->unique();
             $table->string("otp",10);
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp("updated_at")->useCurrent()->useCurrentOnUpdate();

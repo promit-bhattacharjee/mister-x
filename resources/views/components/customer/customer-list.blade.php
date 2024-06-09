@@ -39,7 +39,7 @@ async function getList() {
 
     try {
         showLoader();
-        let res=await axios.get("/list-customer",HeaderToken());
+        let res=await axios.get("/get-customer");
         hideLoader();
 
         let tableList=$("#tableList");
@@ -47,8 +47,8 @@ async function getList() {
 
         tableData.DataTable().destroy();
         tableList.empty();
-
-        res.data['rows'].forEach(function (item,index) {
+        // window.alert(res['data']['data'])
+        res['data']['data'].forEach(function (item,index) {
             let row=`<tr>
                     <td>${index+1}</td>
                     <td>${item['name']}</td>
@@ -81,7 +81,7 @@ async function getList() {
 
 
     }catch (e) {
-        unauthorized(e.response.status)
+        // unauthorized(e.response.status)
     }
 
 }

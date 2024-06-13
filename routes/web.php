@@ -68,7 +68,7 @@ Route::middleware(TokenVerificationMiddleware::class)->group(
         //API
         Route::post("/create-product", [ProductController::class, "CreateProduct"]);
         Route::post("/delete-product", [ProductController::class, "DeleteProduct"]);
-        Route::get("/product-by-id", [ProductController::class, "GetProductByID"]);
+        Route::post("/product-by-id", [ProductController::class, "GetProductByID"]);
         Route::get("/get-product", [ProductController::class, "GetProduct"]);
         Route::post("/update-product", [ProductController::class, "UpdateProduct"]);
         //web

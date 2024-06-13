@@ -149,27 +149,30 @@ class ProductController extends Controller
             $user_id = $request->header("id");
             $id = $request->input("id");
             $res = Product::where("user_id", "=", $user_id)
-                ->where("id", "=", $id)->first();
-            if ($res != null) {
+                ->where("id", "=", $id)
+                ->first();
+
+            if ($res !== null) {
                 return response()->json([
-                    "status" => "sucessful",
-                    "message" => "Product Data Fetched Sucessfully",
+                    "status" => "successful",
+                    "message" => "Product data fetched successfully",
                     "data" => $res
                 ]);
             } else {
                 return response()->json([
-                    "status" => "faild",
+                    "status" => "failed",
                     "message" => "Product ID does not exist",
                 ]);
             }
 
         } catch (Exception $e) {
             return response()->json([
-                "status" => "faild",
+                "status" => "failed",
                 "message" => $e->getMessage()
             ]);
         }
     }
+
     function GetProduct(Request $request)
     {
         try {

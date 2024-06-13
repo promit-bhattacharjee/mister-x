@@ -53,8 +53,8 @@
             <td>${item['price']} </td>
             <td>${item['unit']} </td>
             <td>
-                <button data-id="${item['id']}" data-path="${item['img_url']}" class="btn edit btn-outline-success">Edit </button>
-                <button data-id="${item['id']}" data-url="${item['img_url']}"class="btn delete btn-outline-danger">Delete </button>
+                <button data-id="${item['id']}" data-url="${item['img_url']}" class="btn edit btn-outline-success">Edit </button>
+                <button data-id="${item['id']}" data-url="${item['img_url']}" class="btn delete btn-outline-danger">Delete </button>
             </td>
 
             </tr>`
@@ -62,7 +62,10 @@
         });
     $(".edit").on("click",async function(){
         let id = $(this).data("id");
-       await categoryByID(id)
+        let img_url = $(this).data("url");
+        // $("#UpdateNewImg").attr("src", img_url);
+        await fillUpdate(id,img_url);
+        //    await categoryByID(id)
         $("#update-modal").modal("show")
     })
     $(".delete").on("click", function(){

@@ -1,5 +1,5 @@
 <div class="modal animated zoomIn" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <div class="modal-header">
@@ -25,19 +25,17 @@
                                 <input type="text" class="form-control" id="unit">
                                 <label class="form-label">Product Image *</label>
                                 <br>
-                                <img src="{{asset("images/default.jpg")}}" class="w-25" id="newImg">
+                                <img src="{{asset("images/default.jpg")}}" class="w-25" id="newImgPriview">
                                 <br>
                                 <br>
-                                <input type="file" class="form-control" id="img" oninput="newImg.src=window.URL.createObjectURL(this.files[0])">
-                                {{-- <label class="form-label">Product Name *</label>
-                                <input type="text" class="form-control" id="categoryName"> --}}
+                                <input type="file" class="form-control" id="img" oninput="newImgPriview.src=window.URL.createObjectURL(this.files[0])">
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal"
+                <button id="modal-close" class="btn bg-gradient-primary" id="closeBTN" data-bs-dismiss="modal"
                     aria-label="Close">Close</button>
                 <button onclick="createProduct()" id="save-btn" class="btn bg-gradient-success">Save</button>
             </div>
@@ -65,19 +63,27 @@ async function createProduct() {
     let unit=document.getElementById("unit").value
     let img=document.getElementById("img").files[0]
     let category_id=document.getElementById("category").value
-
-    let res =await axios.post("/create-product",
-    {
-        name:name,
-        price:price,
-        unit:unit,
-        category_id:category_id,
-        img:img
-    })
+    let closeBTN=document.getElementById("closeBTN")
+    let formData= new FormData()
+    formData.append("name",name)
+    formData.append("price",price)
+    formData.append("unit",unit)
+    formData.append("img",img)
+    formData.append("category_id",category_id)
+    const config ={
+        headers:{
+            'content-type':'multipart/form-data'
+        }
+    }
+    let res =await axios.post("/create-product",formData,config)
     if(res.status==200 && res.data.status=="sucessful")
     {
         successToast("Product Created Sucessfully")
-        document.getElementById("save-form").reset()
+        // document.getElementById("save-form").reset();
+        // closeBTN.click();
+        await getList()
+
+
 
     }
     else{

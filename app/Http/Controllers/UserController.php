@@ -32,7 +32,7 @@ class UserController extends Controller
         return View("pages.auth.verify-otp-page");
     }
     function Dashboard():view{
-        return  View("pages.dashboard.profile-page");
+        return  View("pages.dashboard.dashboard-page");
     }
     function ResetPasswordPage():view
     {

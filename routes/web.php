@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\CategoryContoller;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use App\Models\User;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,5 +78,22 @@ Route::middleware(TokenVerificationMiddleware::class)->group(
         //web
         Route::get("/productpage", [ProductController::class, "ProductPage"]);
 
+        //Invoice
+        //API
+        Route::post('/create-invoice',[InvoiceController::class,'CreateInvoice']);
+        Route::post('/delete-invoice',[InvoiceController::class,'DeleteInvoice']);
+        Route::post('/details-invoice',[InvoiceController::class,'DetailsInvoice']);
+        Route::get('/get-invoice',[InvoiceController::class,'getInvoice']);
+
+        //web
+        Route::get('/salePage',[InvoiceController::class,'salePage']);
+        Route::get('/invoicePage',[InvoiceController::class,'invoicePage']);
+
+        //dashboard
+        //api
+        Route::get("/summary-dashboard",[DashboardController::class,"GetSummary"]);
+        //Report
+        Route::get("/report",[ReportController::class,"ReportPage"]);
+        Route::get("/sale-report/{from}/{to}",[ReportController::class,"ReportPage"]);
     }
 );

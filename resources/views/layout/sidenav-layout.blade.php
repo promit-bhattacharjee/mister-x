@@ -4,7 +4,6 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title></title>
-
     <link rel="icon" type="image/x-icon" href="{{asset('/favicon.ico')}}" />
     <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet" />
     <link href="{{asset('css/animate.min.css')}}" rel="stylesheet" />
@@ -102,7 +101,7 @@
         <span class="side-bar-item-caption">Invoice</span>
     </a>
 
-    <a href="{{url('/reportPage')}}" class="side-bar-item">
+    <a href="{{url('/report')}}" class="side-bar-item">
         <i class="bi bi-file-earmark-bar-graph"></i>
         <span class="side-bar-item-caption">Report</span>
     </a>

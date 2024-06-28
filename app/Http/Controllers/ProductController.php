@@ -152,17 +152,14 @@ class ProductController extends Controller
                 ->where("id", "=", $id)
                 ->first();
 
-            if ($res !== null) {
-                return response()->json([
-                    "status" => "successful",
-                    "message" => "Product data fetched successfully",
-                    "data" => $res
-                ]);
-            } else {
+            if ($res == null || $res=="") {
                 return response()->json([
                     "status" => "failed",
                     "message" => "Product ID does not exist",
                 ]);
+            } else {
+                return $res;
+
             }
 
         } catch (Exception $e) {
